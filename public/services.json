@@ -1,0 +1,79 @@
+[
+  {
+    "serviceId": 1,
+    "serviceName": "Winter Coat Fitting for Cats",
+    "providerName": "PawCare Studio",
+    "providerEmail": "info@pawcare.com",
+    "price": 25,
+    "rating": 4.9,
+    "slotsAvailable": 4,
+    "description": "Custom coat fitting and warm outfit options to keep your dog comfortable in the cold.",
+    "image": "https://i.ibb.co.com/352vsYv0/Winter-Coat-Fitting-for-Dogs.png",
+    "category": "Clothing"
+  },
+  
+  {
+    "serviceId": 2,
+    "serviceName": "Winter Grooming & Paw Treatment",
+    "providerName": "CozyPets Grooming",
+    "providerEmail": "hello@cozypets.com",
+    "price": 30,
+    "rating": 4.8,
+    "slotsAvailable": 3,
+    "description": "Professional grooming with moisturizing paw balm and winter-safe shampoo.",
+    "image": "https://i.ibb.co.com/qMMhcM6n/Winter-Grooming-Paw-Treatment.png",
+    "category": "Grooming"
+  },
+
+  {
+    "serviceId": 3,
+    "serviceName": "Heated Pet Bed Rental",
+    "providerName": "WarmNook",
+    "providerEmail": "contact@warmnook.com",
+    "price": 12,
+    "rating": 4.7,
+    "slotsAvailable": 7,
+    "description": "Short-term heated bed rental for older pets sensitive to cold.",
+    "image": "https://i.ibb.co.com/xq94wgHJ/Heated-Pet-Bed-Rental.jpg",
+    "category": "Comfort"
+  },
+
+  {
+    "serviceId": 4,
+    "serviceName": "Winter Nutrition Consult",
+    "providerName": "VetCare Clinic",
+    "providerEmail": "vet@vetcare.com",
+    "price": 40,
+    "rating": 4.9,
+    "slotsAvailable": 2,
+    "description": "Diet plan to keep pets energetic and warm during the cold months.",
+    "image": "https://i.ibb.co.com/nNPZVDyj/Winter-Nutrition-Consult.png",
+    "category": "Nutrition"
+  },
+
+  {
+    "serviceId": 5,
+    "serviceName": "Paw Waxing & Salt Protection",
+    "providerName": "PawShield",
+    "providerEmail": "support@pawshield.com",
+    "price": 18,
+    "rating": 4.6,
+    "slotsAvailable": 5,
+    "description": "Paw wax and treatment to protect pads from ice salt and cracking.",
+    "image": "https://i.ibb.co.com/MxRwJN2j/Paw-Waxing-Salt-Protection.jpg",
+    "category": "Grooming"
+  },
+
+  {
+    "serviceId": 6,
+    "serviceName": "Emergency Cold Weather Check-up",
+    "providerName": "24/7 Vet",
+    "providerEmail": "help@247vet.com",
+    "price": 60,
+    "rating": 5.0,
+    "slotsAvailable": 1,
+    "description": "Urgent care service for hypothermia or frostbite concerns.",
+    "image": "https://i.ibb.co.com/G4D6m2WK/Emergency-Cold-Weather-Check-up.jpg",
+    "category": "Health"
+  }
+]
