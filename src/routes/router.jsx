@@ -6,6 +6,8 @@ import AuthLayout from "../pages/AuthLayout";
 import Register from "../pages/Register";
 import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home/Home";
+import AllContest from "../pages/AllContest";
+import ContestDetails from "../pages/ContestDetails";
 
 
 
@@ -18,6 +20,16 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Home />,
+            },
+
+            {
+                path:'all-contests',
+                element: <AllContest></AllContest>
+            },
+
+            {
+                path: 'contest-details/:id',
+                element: <ContestDetails></ContestDetails>
             }
 
         ]

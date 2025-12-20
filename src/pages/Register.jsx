@@ -5,35 +5,30 @@ import { AuthContext } from "../components/provider/AuthProvider";
 import { useNavigate } from "react-router";
 import { Link } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
+import axios from 'axios';
 
 const Register = () => {
-
-  const [toggle, setToggle] = useState(false)
+  const [toggle, setToggle] = useState(false);
   const { createUser, setUser, updateUser, signInWithGoogle } = use(AuthContext);
-
   const navigate = useNavigate();
 
   const handleToggle = () => {
-    setToggle(!toggle)
-  }
+    setToggle(!toggle);
+  };
 
   const handleRegister = (e) => {
     e.preventDefault();
-
     const form = e.target;
     const name = form.name.value;
     const photo = form.photo.value;
     const email = form.email.value;
     const password = form.password.value;
-
+    const role = form.role.value;
 
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-    // console.log(passwordRegex.test(password))
-
     if (!passwordRegex.test(password)) {
-      toast.error('password must be at least 8 characters long and include at least one uppercase lettar, one lowarcase lettar, one number, and one spcial charactar');
+      toast.error('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character');
       return;
     }
 
@@ -42,40 +37,51 @@ const Register = () => {
         const user = res.user;
         updateUser({ displayName: name, photoURL: photo }).then(() => {
           setUser({ ...user, displayName: name, photoURL: photo });
-          navigate('/');
-          toast.success('register succesfull');
-          form.reset()
+          axios.post('http://localhost:3000/users', { name, photo, email, role })
+            .then(() => {
+              navigate('/');
+              toast.success('Registration successful');
+              form.reset();
+            })
+            .catch((error) => {
+              toast.error(error.message);
+            });
         })
           .catch((error) => {
             toast.error(error.message);
-
             setUser(user);
-
-          })
-
-
-
+          });
       }).catch(e => {
-        console.log(e)
         toast.error(e.message);
-      })
-  }
+      });
+  };
 
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then(result => {
         const user = result.user;
-        console.log(user)
-        navigate(`${location.state ? location.state : '/'}`)
-        setUser(user)
+        const name = user.displayName;
+        const photo = user.photoURL;
+        const email = user.email;
+        const role = 'participant';  
+
+        axios.post('http://localhost:3000/users', { name, photo, email, role })
+          .then(() => {
+            navigate(`${location.state ? location.state : '/'}`);
+            setUser(user);
+            toast.success('Google Sign-In successful');
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            toast.error(errorCode);
+          });
       })
       .catch((error) => {
         const errorCode = error.code;
-        toast.error(errorCode)
-
-
-      })
+        toast.error(errorCode);
+      });
   };
+
   return (
     <div>
       <title>Register</title>
@@ -84,32 +90,27 @@ const Register = () => {
           <h1 className='font-semibold text-2xl text-center '>Register your account</h1>
           <form onSubmit={handleRegister} className="card-body">
             <fieldset className="fieldset">
-              {/* Name */}
-
               <label className="label">Name</label>
-              <input name='name' type="text" className="input" placeholder="Name"
-                required
-              />
-              {/*Photo URL */}
+              <input name='name' type="text" className="input" placeholder="Name" required />
 
-              <label className="label">Photo URl</label>
-              <input name='photo' type="text" className="input" placeholder="Photo URl"
-                required
-              />
-              {/* email */}
+              <label className="label">Photo URL</label>
+              <input name='photo' type="text" className="input" placeholder="Photo URL" required />
 
               <label className="label">Email</label>
-              <input name='email' type="email" className="input" placeholder="Email"
-                required
-              />
+              <input name='email' type="email" className="input" placeholder="Email" required />
 
-              {/* password */}
               <div className='relative'>
                 <label className="label">Password</label>
                 <input name='password' type={toggle ? 'text' : 'password'} className="input" placeholder="Password" required />
                 <div className='absolute bottom-3.5 right-5' onClick={handleToggle}>{toggle ? <FaEyeSlash /> : <FaEye />}</div>
-
               </div>
+
+              <label className="label">Role</label>
+              <select name="role" className="input" required>
+                <option value="creator">Creator</option>
+                <option value="participant">Participant</option>
+              </select>
+
               <button type='submit' className="btn bg-blue-800 hover:bg-blue-500 text-white mt-4">Register</button>
               <p className='text-center font-bold'>Or</p>
               <button onClick={handleGoogleSignIn} className="btn bg-white text-black border-[#e5e5e5]">
@@ -117,14 +118,13 @@ const Register = () => {
                 Login with Google
               </button>
 
-              <p className='text-center py-5'>Allready Have An Account ?{''} <Link to='/auth/login' className='text-secondary'>Login</Link></p>
-
+              <p className='text-center py-5'>Already Have An Account? <Link to='/auth/login' className='text-secondary'>Login</Link></p>
             </fieldset>
           </form>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Register;

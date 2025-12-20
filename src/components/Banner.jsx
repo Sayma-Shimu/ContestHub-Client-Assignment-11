@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Banner = () => {
   return (
@@ -17,8 +17,9 @@ const Banner = () => {
               <input
                 type="text"
                 placeholder="Search by contest type (e.g., Design, Writing...)"
-                className="input input-bordered w-full text-black"
-                
+                className="input input-bordered w-full bg-white text-black 
+                           data-[theme=dark]:bg-white data-[theme=dark]:text-black 
+                           focus:outline-none focus:ring-2 focus:ring-yellow-400"
               />
               <button type="submit" className="btn btn-accent text-white">
                 Search Contests
@@ -28,7 +29,7 @@ const Banner = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default Banner
+export default Banner;

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 import { useRef } from 'react';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router';
+import axios from 'axios';
 
 const Login = () => {
 
@@ -49,20 +50,26 @@ const Login = () => {
     signInWithGoogle()
       .then(result => {
         const user = result.user;
-        console.log(user)
-        setUser(user)
-        navigate(`${location.state ? location.state : '/'}`)
+        const name = user.displayName;
+        const photo = user.photoURL;
+        const email = user.email;
+        const role = 'participant';
 
-        setTimeout(() => {
-          window.location.reload()
-        }, 1000)
-        toast.success('You have logged in succesfully!')
+        axios.post('http://localhost:3000/users', { name, photo, email, role })
+          .then(() => {
+            navigate(`${location.state ? location.state : '/'}`);
+            setUser(user);
+            toast.success('Google Sign-In successful');
+          })
+          .catch((error) => {
+            navigate(`${location.state ? location.state : '/'}`);
+            toast.success('Google Sign-In successful');
+          });
       })
       .catch((error) => {
-        const errrorCode = error.code;
-
-        setError(errrorCode);
-      })
+        const errorCode = error.code;
+        toast.error(errorCode);
+      });
   }
 
 
