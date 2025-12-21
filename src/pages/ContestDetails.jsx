@@ -46,7 +46,7 @@ const ContestDetails = () => {
     fetchRegistrations();
   }, []);
 
-  const isUserRegistered = registrations?.find(r => r.contestId === contest._id && r.userEmail === user?.email);
+  const isUserRegistered = registrations?.find(r => r.contestId === contest?._id && r.userEmail === user?.email);
 
   const calculateTimeRemaining = (deadline) => {
     const deadlineDate = new Date(deadline);
