@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 const ContestDetails = () => {
-  const {id} = useParams()
+  const { id } = useParams();
   const [contest, setContest] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isEnded, setIsEnded] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState('');
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchContestData = async () => {
@@ -23,7 +25,7 @@ const ContestDetails = () => {
     fetchContestData();
   }, [id]);
 
-  const getTimeRemaining = (deadline) => {
+  const calculateTimeRemaining = (deadline) => {
     const deadlineDate = new Date(deadline);
     const currentDate = new Date();
     const timeDiff = deadlineDate - currentDate;
@@ -40,6 +42,16 @@ const ContestDetails = () => {
 
     return `${days}d ${hours}h ${minutes}m ${seconds}s`;
   };
+
+  useEffect(() => {
+    if (contest && !isEnded) {
+      const intervalId = setInterval(() => {
+        setTimeRemaining(calculateTimeRemaining(contest.deadline));
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [contest, isEnded]);
 
   if (isLoading) {
     return (
@@ -76,6 +88,10 @@ const ContestDetails = () => {
             <strong>Contest Type: </strong>
             {contest.contestType}
           </p>
+          <p className="text-lg text-gray-600">
+            <strong>Registration Price: </strong>
+            {contest.price}
+          </p>
         </div>
 
         <div className="mb-4">
@@ -94,7 +110,7 @@ const ContestDetails = () => {
         <div className="mb-4">
           <p className="text-lg text-gray-600">
             <strong>Deadline: </strong>
-            {!isEnded ? getTimeRemaining(contest.deadline) : 'Contest Ended'}
+            {isEnded ? 'Contest Ended' : timeRemaining}
           </p>
         </div>
 
@@ -110,8 +126,8 @@ const ContestDetails = () => {
 
         <div className="text-center">
           {!isEnded && (
-            <button className="btn btn-primary w-full max-w-xs">
-              Register / Pay
+            <button onClick={()=>navigate(`/payment/${id}`)} className="btn btn-primary w-full max-w-xs">
+              Register
             </button>
           )}
         </div>

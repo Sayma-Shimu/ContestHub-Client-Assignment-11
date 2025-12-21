@@ -8,6 +8,7 @@ import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home/Home";
 import AllContest from "../pages/AllContest";
 import ContestDetails from "../pages/ContestDetails";
+import Payment from "../pages/Payment";
 
 
 
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
             {
                 path: 'contest-details/:id',
                 element: <ContestDetails></ContestDetails>
+            },
+
+            {
+                path: 'payment/:id',
+                element: <Payment></Payment>
             }
 
         ]
