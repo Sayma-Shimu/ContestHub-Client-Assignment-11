@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router';
+import { AuthContext } from '../components/provider/AuthProvider';
+import { toast } from 'react-toastify';
 
 const ContestDetails = () => {
   const { id } = useParams();
@@ -8,7 +10,13 @@ const ContestDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isEnded, setIsEnded] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState('');
-  const navigate = useNavigate()
+  const [registrations, setRegistrations] = useState([]);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [submissionText, setSubmissionText] = useState('');
+  const [isTaskSubmitted, setIsTaskSubmitted] = useState(false);
+  const navigate = useNavigate();
+  const { user } = use(AuthContext);
 
   useEffect(() => {
     const fetchContestData = async () => {
@@ -21,9 +29,24 @@ const ContestDetails = () => {
         setIsLoading(false);
       }
     };
-
     fetchContestData();
   }, [id]);
+
+  useEffect(() => {
+    const fetchRegistrations = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/registrations`);
+        setRegistrations(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching registrations:', error);
+        setIsLoading(false);
+      }
+    };
+    fetchRegistrations();
+  }, []);
+
+  const isUserRegistered = registrations?.find(r => r.contestId === contest._id && r.userEmail === user?.email);
 
   const calculateTimeRemaining = (deadline) => {
     const deadlineDate = new Date(deadline);
@@ -53,6 +76,41 @@ const ContestDetails = () => {
     }
   }, [contest, isEnded]);
 
+  useEffect(() => {
+    const userSubmission = registrations?.find(r => r.contestId === contest?._id && r.userEmail === user?.email && r.submissions?.length > 0);
+    if (userSubmission) {
+      setIsTaskSubmitted(true);
+    }
+  }, [registrations, contest, user]);
+
+  const handleSubmitTask = async () => {
+    try {
+      const registrationId = registrations?.find(r => r.contestId === contest?._id && r.userEmail === user?.email)?._id;
+
+      if (!registrationId) {
+        alert('Registration not found for this contest.');
+        return;
+      }
+
+      const submissionData = {
+        submissionText,
+      };
+
+      const response = await axios.patch(`http://localhost:3000/registrations/${registrationId}`, submissionData);
+
+      if (response.status === 200) {
+        setIsTaskSubmitted(true); 
+        setIsModalOpen(false);
+        toast.success('Task submitted successfully!');
+      } else {
+        alert('Error submitting the task');
+      }
+    } catch (error) {
+      console.error('Error submitting task:', error);
+      alert('Error submitting the task');
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="text-center p-8">
@@ -76,61 +134,67 @@ const ContestDetails = () => {
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-4">{contest.name}</h2>
 
         <div className="mb-4">
-          <p className="text-lg text-gray-600">
-            <strong>Description: </strong>
-            {contest.description}
-          </p>
-          <p className="text-lg text-gray-600">
-            <strong>Task Instruction: </strong>
-            {contest.taskInstruction}
-          </p>
-          <p className="text-lg text-gray-600">
-            <strong>Contest Type: </strong>
-            {contest.contestType}
-          </p>
-          <p className="text-lg text-gray-600">
-            <strong>Registration Price: </strong>
-            {contest.price}
-          </p>
+          <p className="text-lg text-gray-600"><strong>Description: </strong>{contest.description}</p>
+          <p className="text-lg text-gray-600"><strong>Task Instruction: </strong>{contest.taskInstruction}</p>
+          <p className="text-lg text-gray-600"><strong>Contest Type: </strong>{contest.contestType}</p>
+          <p className="text-lg text-gray-600"><strong>Registration Price: </strong>{contest.price}</p>
         </div>
 
         <div className="mb-4">
-          <p className="text-xl font-semibold text-gray-800">
-            Prize Money: <span className="text-green-600">${contest.prizeMoney}</span>
-          </p>
+          <p className="text-xl font-semibold text-gray-800">Prize Money: <span className="text-green-600">${contest.prizeMoney}</span></p>
         </div>
 
         <div className="mb-4">
-          <p className="text-lg text-gray-600">
-            <strong>Participants Count: </strong>
-            {contest.participantsCount}
-          </p>
+          <p className="text-lg text-gray-600"><strong>Participants Count: </strong>{contest.participantsCount}</p>
         </div>
 
         <div className="mb-4">
-          <p className="text-lg text-gray-600">
-            <strong>Deadline: </strong>
-            {isEnded ? 'Contest Ended' : timeRemaining}
-          </p>
+          <p className="text-lg text-gray-600"><strong>Deadline: </strong>{isEnded ? 'Contest Ended' : timeRemaining}</p>
         </div>
 
         {contest.winner && (
           <div className="mb-4 flex items-center">
             <img src={contest.winnerPhoto} alt={contest.winner} className="rounded-full w-16 h-16 mr-4" />
-            <p className="text-lg text-gray-600">
-              <strong>Winner: </strong>
-              {contest.winner}
-            </p>
+            <p className="text-lg text-gray-600"><strong>Winner: </strong>{contest.winner}</p>
           </div>
         )}
 
-        <div className="text-center">
-          {!isEnded && (
-            <button onClick={()=>navigate(`/payment/${id}`)} className="btn btn-primary w-full max-w-xs">
-              Register
+        {isUserRegistered && !isTaskSubmitted ? (
+          <div className="text-center">
+            <button onClick={() => setIsModalOpen(true)} className="btn btn-primary w-full max-w-xs">
+              Submit Task
             </button>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="text-center">
+            {!isEnded && !isTaskSubmitted && (
+              <button onClick={() => navigate(`/payment/${id}`)} className="btn btn-primary w-full max-w-xs">
+                Register
+              </button>
+            )}
+          </div>
+        )}
+        
+        {isModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="modal modal-open">
+              <div className="modal-box">
+                <h2 className="text-xl font-semibold">Submit Your Task</h2>
+                <textarea
+                  className="textarea textarea-bordered w-full mt-4"
+                  rows="5"
+                  value={submissionText}
+                  onChange={(e) => setSubmissionText(e.target.value)}
+                  placeholder="Provide your task submission here..."
+                ></textarea>
+                <div className="modal-action">
+                  <button className="btn" onClick={() => setIsModalOpen(false)}>Close</button>
+                  <button className="btn btn-primary" onClick={handleSubmitTask}>Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

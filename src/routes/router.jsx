@@ -9,6 +9,8 @@ import Home from "../pages/Home/Home";
 import AllContest from "../pages/AllContest";
 import ContestDetails from "../pages/ContestDetails";
 import Payment from "../pages/Payment";
+import Dashboard from "../layouts/Dashboard";
+import MyContestUser from "../pages/MyContestUser";
 
 
 
@@ -24,7 +26,7 @@ const router = createBrowserRouter([
             },
 
             {
-                path:'all-contests',
+                path: 'all-contests',
                 element: <AllContest></AllContest>
             },
 
@@ -54,7 +56,18 @@ const router = createBrowserRouter([
                 path: "/auth/register",
                 element: <Register></Register>,
             },
-        
+
+        ]
+    },
+
+    {
+        path: 'dashboard',
+        element: <Dashboard></Dashboard>,
+        children: [
+            {
+                path: 'participated-contests',
+                element: <MyContestUser></MyContestUser>
+            }
         ]
     },
 

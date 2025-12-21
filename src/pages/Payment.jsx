@@ -1,52 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import React, { use, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
-import useRole from '../hooks/useRole';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../components/provider/AuthProvider';
 
 const Payment = () => {
     const { id } = useParams();
     const [contest, setContest] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const user = useRole();
-
-    const fetchContestData = async () => {
-        try {
-            const response = await axios.get(`http://localhost:3000/approved-contests/${id}`);
-            setContest(response.data);
-            setIsLoading(false);
-        } catch (error) {
-            console.error('Error fetching contest details:', error);
-            setIsLoading(false);
-        }
-    };
+    const { user } = use(AuthContext); 
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetchContestData();
-    }, [id]);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const registrationData = {
-            contestId: contest._id,
-            contestName: contest.name,
-            userName: user?.name,
-            userEmail: user?.email,
-            price: contest.prizeMoney,
-            paymentStatus: "Pending",
+        const fetchContestData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/approved-contests/${id}`);
+                setContest(response.data);
+                setIsLoading(false);
+            } catch (error) {
+                console.error('Error fetching contest details:', error);
+                setIsLoading(false);
+            }
         };
 
-        try {
-            await axios.post('http://localhost:3000/registrations', registrationData);
-
-            // Redirect to Stripe payment page or initiate Stripe Checkout here.
-            // Example: window.location.href = `/stripe-checkout?registrationId=${registrationData._id}`;
-        } catch (error) {
-            console.error('Error submitting registration:', error);
-            alert('There was an issue submitting your registration.');
-        }
-    };
+        fetchContestData();
+    }, [id]);
 
     if (isLoading) {
         return (
@@ -56,6 +34,34 @@ const Payment = () => {
             </div>
         );
     }
+
+    if (!contest) {
+        return <div className="text-center p-8">Contest not found</div>;
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target); 
+
+        const registrationData = {
+            contestId: contest._id,
+            contestName: contest.name,
+            userName: formData.get('userName'),
+            userEmail: formData.get('userEmail'),
+            creatorEmail: contest?.creatorEmail,
+            price: contest.prizeMoney,
+            paymentStatus: "Paid",
+        };
+
+        try {
+            const response = await axios.post('http://localhost:3000/registrations', registrationData);
+            toast.success('Registration submitted successfully.');
+            navigate(-1);
+        } catch (error) {
+            console.error('Error submitting registration:', error);
+            toast.error('There was an issue submitting your registration.');
+        }
+    };
 
     return (
         <div className="container mx-auto p-6">
@@ -70,7 +76,6 @@ const Payment = () => {
                     </div>
                 </div>
 
-
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <div>
                         <label className="block text-sm font-semibold text-gray-700">Your Name</label>
@@ -79,7 +84,7 @@ const Payment = () => {
                             className="input input-bordered w-full mt-2"
                             placeholder="Enter your full name"
                             name="userName"
-                            defaultValue={user?.name || ""}
+                            defaultValue={user?.displayName || ""}
                             required
                         />
                     </div>
@@ -112,7 +117,7 @@ const Payment = () => {
                         <input
                             type="text"
                             className="input input-bordered w-full mt-2"
-                            value={`$${contest.prizeMoney}`}
+                            value={`$${contest.price}`}
                             name="amount"
                             readOnly
                         />
