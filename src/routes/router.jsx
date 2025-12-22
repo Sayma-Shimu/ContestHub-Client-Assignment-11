@@ -18,6 +18,7 @@ import MyContestCreator from "../pages/MyContestCreator";
 import ManageUsers from "../pages/ManageUsers";
 import ManageContests from "../pages/ManageContests";
 import Submissions from "../pages/Submissions";
+import PrivateRout from "../components/provider/PrivateRoute";
 
 
 
@@ -39,12 +40,12 @@ const router = createBrowserRouter([
 
             {
                 path: 'contest-details/:id',
-                element: <ContestDetails></ContestDetails>
+                element: <PrivateRout><ContestDetails></ContestDetails></PrivateRout>
             },
 
             {
                 path: 'payment/:id',
-                element: <Payment></Payment>
+                element: <PrivateRout><Payment></Payment></PrivateRout>
             }
 
         ]
@@ -69,7 +70,7 @@ const router = createBrowserRouter([
 
     {
         path: 'dashboard',
-        element: <Dashboard></Dashboard>,
+        element: <PrivateRout><Dashboard></Dashboard></PrivateRout>,
         children: [
             {
                 path: 'participated-contests',
