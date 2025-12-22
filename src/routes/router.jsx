@@ -15,6 +15,7 @@ import Winninngs from "../pages/Winninngs";
 import MyProfile from "../pages/MyProfile";
 import AddContest from "../pages/AddContest";
 import MyContestCreator from "../pages/MyContestCreator";
+import ManageUsers from "../pages/ManageUsers";
 
 
 
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
             {
                 path: 'created-contests',
                 element: <MyContestCreator></MyContestCreator>
+            },
+            {
+                path: 'manage-users',
+                element: <ManageUsers></ManageUsers>
             },
             {
                 path: 'my-profile',

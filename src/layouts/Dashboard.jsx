@@ -48,7 +48,14 @@ const Dashboard = () => {
                         {/* Admin Routes  */}
 
                         {user?.role === "admin" && <>
+                            <Link to="/dashboard/manage-users">
+                                <li>
+                                    <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manager Users">
 
+                                        <span className="is-drawer-close:hidden">Manager Users</span>
+                                    </button>
+                                </li>
+                            </Link>
                         </>}
 
                         {/* Creator Routes */}
@@ -64,9 +71,9 @@ const Dashboard = () => {
                             </Link>
                             <Link to="/dashboard/created-contests">
                                 <li>
-                                    <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Contest">
+                                    <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Contests">
 
-                                        <span className="is-drawer-close:hidden">My Contest</span>
+                                        <span className="is-drawer-close:hidden">My Contests</span>
                                     </button>
                                 </li>
                             </Link>
