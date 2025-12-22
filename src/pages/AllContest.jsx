@@ -46,9 +46,9 @@ const AllContests = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 bg-gray-200">
-      <h2 className="text-3xl font-bold text-center mb-8">All Contests</h2>
+      <h2 className="text-3xl font-bold text-center mb-8 text-black">All Contests</h2>
 
-      <div className="flex flex-wrap justify-center gap-4 mb-10">
+      <div className="flex flex-wrap justify-center gap-4 mb-10 text-black">
         {contestTypes.map((type) => (
           <button
             key={type}
