@@ -3,10 +3,10 @@
 ContestHub is a modern, full-stack contest management web application where users can explore creative contests, participate by paying an entry fee, creators can host contests, and admins manage the entire ecosystem.  
 The platform is designed with a clean UI, secure authentication, role-based dashboards, and a smooth payment flow.
 
----
+
 
 ## 🔗 Live Website
-👉 https://your-live-site-link.com
+👉 https://delightful-pasca-b91f0e.netlify.app/
 
 ---
 ## ✨ Key Features
