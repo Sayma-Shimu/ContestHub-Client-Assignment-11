@@ -68,6 +68,17 @@ const Dashboard = () => {
                                     </button>
                                 </li>
                             </Link>
+
+                            <Link to="/dashboard/my-winnings">
+                            <li>
+                                <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Winnings">
+
+
+                                    <span className="is-drawer-close:hidden">My Winnings</span>
+                                </button>
+
+                            </li>
+                        </Link>
                         </>}
 
 
@@ -82,6 +93,7 @@ const Dashboard = () => {
 
                             </li>
                         </Link>
+                        
 
                         <Link to="/">
                             <li>

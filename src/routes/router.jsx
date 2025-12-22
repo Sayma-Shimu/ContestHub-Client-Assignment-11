@@ -11,6 +11,7 @@ import ContestDetails from "../pages/ContestDetails";
 import Payment from "../pages/Payment";
 import Dashboard from "../layouts/Dashboard";
 import MyContestUser from "../pages/MyContestUser";
+import Winninngs from "../pages/Winninngs";
 
 
 
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
             {
                 path: 'participated-contests',
                 element: <MyContestUser></MyContestUser>
+            },
+            {
+                path: 'my-winnings',
+                element: <Winninngs></Winninngs>
             }
         ]
     },
