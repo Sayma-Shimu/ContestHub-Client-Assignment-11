@@ -23,7 +23,7 @@ const AboutUs = () => {
       <div className="max-w-6xl mx-auto mt-16 grid md:grid-cols-2 gap-8">
         <div className="bg-white rounded-2xl shadow-md p-8">
           <Target className="text-indigo-600 mb-4" size={36} />
-          <h3 className="text-2xl font-semibold mb-3">Our Mission</h3>
+          <h3 className="text-2xl font-semibold mb-3 dark:text-black">Our Mission</h3>
           <p className="text-gray-600">
             ContestHub empowers creators through fair and transparent contests.
           </p>
@@ -31,7 +31,7 @@ const AboutUs = () => {
 
         <div className="bg-white rounded-2xl shadow-md p-8">
           <Sparkles className="text-indigo-600 mb-4" size={36} />
-          <h3 className="text-2xl font-semibold mb-3">Our Vision</h3>
+          <h3 className="text-2xl font-semibold mb-3 dark:text-black">Our Vision</h3>
           <p className="text-gray-600">
             To become the leading global hub for creative competitions.
           </p>
@@ -40,14 +40,14 @@ const AboutUs = () => {
 
       {/* Why ContestHub */}
       <div className="max-w-6xl mx-auto mt-20">
-        <h2 className="text-3xl font-bold text-center mb-10">
+        <h2 className="text-3xl font-bold text-center mb-10 dark:text-black">
           Why ContestHub?
         </h2>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="bg-white rounded-2xl shadow-sm p-6">
             <Users className="text-indigo-600 mb-3" size={32} />
-            <h4 className="text-xl font-semibold mb-2">Community Driven</h4>
+            <h4 className="text-xl font-semibold mb-2 dark:text-black">Community Driven</h4>
             <p className="text-gray-600">
               A strong community of creators and innovators.
             </p>
@@ -55,7 +55,7 @@ const AboutUs = () => {
 
           <div className="bg-white rounded-2xl shadow-sm p-6">
             <Trophy className="text-indigo-600 mb-3" size={32} />
-            <h4 className="text-xl font-semibold mb-2">Fair Competition</h4>
+            <h4 className="text-xl font-semibold mb-2 dark:text-black">Fair Competition</h4>
             <p className="text-gray-600">
               Transparent judging with real rewards.
             </p>
@@ -63,7 +63,7 @@ const AboutUs = () => {
 
           <div className="bg-white rounded-2xl shadow-sm p-6">
             <Sparkles className="text-indigo-600 mb-3" size={32} />
-            <h4 className="text-xl font-semibold mb-2">Creative Freedom</h4>
+            <h4 className="text-xl font-semibold mb-2 dark:text-black">Creative Freedom</h4>
             <p className="text-gray-600">
               Participate in diverse and exciting contests.
             </p>
