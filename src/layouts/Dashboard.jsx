@@ -7,7 +7,7 @@ import logo from "../assets/contest_logo.png";
 const Dashboard = () => {
     const user = useRole()
     const theme = localStorage.getItem("theme") || "light"
-    
+
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -54,7 +54,14 @@ const Dashboard = () => {
                         {/* Creator Routes */}
 
                         {user?.role === "creator" && <>
+                            <Link to="/dashboard/add-contest">
+                                <li>
+                                    <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add New Contest">
 
+                                        <span className="is-drawer-close:hidden">Add New Contest</span>
+                                    </button>
+                                </li>
+                            </Link>
                         </>}
 
                         {/* Participant Routes */}
@@ -70,15 +77,15 @@ const Dashboard = () => {
                             </Link>
 
                             <Link to="/dashboard/my-winnings">
-                            <li>
-                                <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Winnings">
+                                <li>
+                                    <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Winnings">
 
 
-                                    <span className="is-drawer-close:hidden">My Winnings</span>
-                                </button>
+                                        <span className="is-drawer-close:hidden">My Winnings</span>
+                                    </button>
 
-                            </li>
-                        </Link>
+                                </li>
+                            </Link>
                         </>}
 
 
@@ -93,7 +100,7 @@ const Dashboard = () => {
 
                             </li>
                         </Link>
-                        
+
 
                         <Link to="/">
                             <li>
