@@ -89,13 +89,13 @@ const ManageContests = () => {
                                                 </div>
                                             </div>
                                             <div>
-                                                <div className="font-bold text-lg">{contest.name}</div>
-                                                <div className="text-sm opacity-60">{contest.contestType}</div>
+                                                <div className="font-bold text-lg dark:text-black">{contest.name}</div>
+                                                <div className="text-sm opacity-60 dark:text-black">{contest.contestType}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <div className="text-sm font-semibold">{contest.creatorEmail}</div>
+                                        <div className="text-sm font-semibold dark:text-black">{contest.creatorEmail}</div>
                                         <div className="text-xs opacity-50">Price: ${contest.price}</div>
                                     </td>
                                     <td>

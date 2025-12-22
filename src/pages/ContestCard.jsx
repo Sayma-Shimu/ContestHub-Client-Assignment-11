@@ -24,7 +24,7 @@ const ContestCard = ({ contest }) => {
           {contestType}
         </span>
 
-        <h3 className="text-xl font-semibold mt-1">
+        <h3 className="text-xl font-semibold mt-1 dark:text-black">
           {name}
         </h3>
 
@@ -32,7 +32,7 @@ const ContestCard = ({ contest }) => {
           {description.slice(0, 80)}...
         </p>
 
-        <div className="flex justify-between mt-4 text-sm">
+        <div className="flex justify-between mt-4 text-sm dark:text-black">
           <span>💰 Prize: {prizeMoney}৳</span>
           <span>👥 {participantsCount} joined</span>
         </div>

@@ -62,7 +62,7 @@ const ManageUsers = () => {
 
                 <div className="overflow-x-auto">
                     <table className="table w-full">
-                        <thead className="bg-gray-100 uppercase">
+                        <thead className="bg-gray-100 uppercase dark:text-black">
                             <tr>
                                 <th>User</th>
                                 <th>Email</th>
@@ -81,12 +81,12 @@ const ManageUsers = () => {
                                                 </div>
                                             </div>
                                             <div>
-                                                <div className="font-bold">{user.name}</div>
-                                                <div className="text-xs opacity-50">{user.role}</div>
+                                                <div className="font-bold dark:text-black">{user.name}</div>
+                                                <div className="text-xs opacity-50 dark:text-black">{user.role}</div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{user.email}</td>
+                                    <td className='dark:text-black'>{user.email}</td>
                                     <td>
                                         <div className={`badge font-bold py-3 px-4 ${
                                             user.role === 'admin' ? 'badge-error text-white' : 
