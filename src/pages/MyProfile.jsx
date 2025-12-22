@@ -67,7 +67,7 @@ const MyProfile = () => {
 
         try {
             await updateUser(updatedData.name, updatedData.photo);
-            const response = await axios.patch(`http://localhost:3000/users/${user.email}`, updatedData);
+            const response = await axios.patch(`https://contesthub-steel.vercel.app/users/${user.email}`, updatedData);
 
             if (response.data.modifiedCount > 0 || response.data.matchedCount > 0) {
                 toast.success("Profile updated successfully!");

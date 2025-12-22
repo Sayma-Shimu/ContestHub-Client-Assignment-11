@@ -7,7 +7,7 @@ const PopularContest = () => {
   const [contests, setContests] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:3000/popular-contests')
+    axios.get('https://contesthub-steel.vercel.app/popular-contests')
       .then(response => {
         setContests(response.data);
       })

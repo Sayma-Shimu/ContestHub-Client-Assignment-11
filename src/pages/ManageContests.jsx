@@ -13,7 +13,7 @@ const ManageContests = () => {
 
     const fetchContests = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/contests`);
+            const response = await axios.get(`https://contesthub-steel.vercel.app/contests`);
             setAllContests(response.data);
             setLoading(false);
         } catch (error) {
@@ -24,7 +24,7 @@ const ManageContests = () => {
 
     const handleStatusChange = async (id, newStatus) => {
         try {
-            const res = await axios.patch(`http://localhost:3000/contests/status/${id}`, { status: newStatus });
+            const res = await axios.patch(`https://contesthub-steel.vercel.app/contests/status/${id}`, { status: newStatus });
             if (res.data.modifiedCount > 0) {
                 toast.success(`Contest ${newStatus} successfully!`);
                 fetchContests();
@@ -46,7 +46,7 @@ const ManageContests = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res = await axios.delete(`http://localhost:3000/contests/${id}`);
+                    const res = await axios.delete(`https://contesthub-steel.vercel.app/contests/${id}`);
                     if (res.data.deletedCount > 0) {
                         toast.success("Contest deleted!");
                         setAllContests(allContests.filter(c => c._id !== id));

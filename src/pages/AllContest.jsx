@@ -16,7 +16,7 @@ const AllContests = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/approved-contests?type=${activeTab}&limit=${limit}&skip=${skip}`)
+      .get(`https://contesthub-steel.vercel.app/approved-contests?type=${activeTab}&limit=${limit}&skip=${skip}`)
       .then((response) => {
         // নতুন অবজেক্ট ফরম্যাট অনুযায়ী ডাটা সেট করা
         setContests(response.data.contests);

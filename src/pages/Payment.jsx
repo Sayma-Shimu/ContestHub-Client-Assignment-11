@@ -14,7 +14,7 @@ const Payment = () => {
     useEffect(() => {
         const fetchContestData = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/approved-contests/${id}`);
+                const response = await axios.get(`https://contesthub-steel.vercel.app/approved-contests/${id}`);
                 setContest(response.data);
                 setIsLoading(false);
             } catch (error) {
@@ -55,7 +55,7 @@ const Payment = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:3000/registrations', registrationData);
+            const response = await axios.post('https://contesthub-steel.vercel.app/registrations', registrationData);
             toast.success('Registration submitted successfully.');
             navigate(-1);
         } catch (error) {

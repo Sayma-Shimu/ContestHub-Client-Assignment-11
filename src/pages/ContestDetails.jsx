@@ -21,7 +21,7 @@ const ContestDetails = () => {
   useEffect(() => {
     const fetchContestData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/approved-contests/${id}`);
+        const response = await axios.get(`https://contesthub-steel.vercel.app/approved-contests/${id}`);
         setContest(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -35,7 +35,7 @@ const ContestDetails = () => {
   useEffect(() => {
     const fetchRegistrations = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/registrations`);
+        const response = await axios.get(`https://contesthub-steel.vercel.app/registrations`);
         setRegistrations(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -96,7 +96,7 @@ const ContestDetails = () => {
         submissionText,
       };
 
-      const response = await axios.patch(`http://localhost:3000/registrations/${registrationId}`, submissionData);
+      const response = await axios.patch(`https://contesthub-steel.vercel.app/registrations/${registrationId}`, submissionData);
 
       if (response.status === 200) {
         setIsTaskSubmitted(true); 

@@ -12,7 +12,7 @@ const MyContestUser = () => {
     useEffect(() => {
         const fetchRegs = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/registrations`);
+                const response = await axios.get(`https://contesthub-steel.vercel.app/registrations`);
                 const data = Array.isArray(response.data) ? response.data : response.data.registrations || [];
                 setRegs(data);
             } catch (error) {
@@ -25,7 +25,7 @@ const MyContestUser = () => {
     useEffect(() => {
         const fetchConts = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/approved-contests`);
+                const response = await axios.get(`https://contesthub-steel.vercel.app/approved-contests`);
                 const data = Array.isArray(response.data) ? response.data : response.data.contests || [];
                 setConts(data);
             } catch (error) {

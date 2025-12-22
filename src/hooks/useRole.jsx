@@ -11,7 +11,7 @@ const useRole = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/users`);
+                const response = await axios.get(`https://contesthub-steel.vercel.app/users`);
                 setDBUsers(response.data);
             } catch (error) {
                 console.error('Error fetching user details:', error);

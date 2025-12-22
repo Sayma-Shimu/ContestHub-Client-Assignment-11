@@ -17,8 +17,8 @@ const Submissions = () => {
     const fetchData = async () => {
         try {
             const [submissionsRes, contestRes] = await Promise.all([
-                axios.get(`http://localhost:3000/submissions/${id}`),
-                axios.get(`http://localhost:3000/approved-contests/${id}`)
+                axios.get(`https://contesthub-steel.vercel.app/submissions/${id}`),
+                axios.get(`https://contesthub-steel.vercel.app/approved-contests/${id}`)
             ]);
             setSubmissions(submissionsRes.data);
             setContest(contestRes.data);
@@ -41,7 +41,7 @@ const Submissions = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res = await axios.patch(`http://localhost:3000/contests/winner/${id}`, {
+                    const res = await axios.patch(`https://contesthub-steel.vercel.app/contests/winner/${id}`, {
                         winnerName: participant.userName,
                         winnerPhoto: participant.userPhoto || "https://i.ibb.co/mR4t7rw/default-user.png"
                     });

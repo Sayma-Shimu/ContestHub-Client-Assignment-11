@@ -28,7 +28,7 @@ const AddContest = () => {
         };
 
         try {
-            const res = await axios.post('http://localhost:3000/contests', contestData);
+            const res = await axios.post('https://contesthub-steel.vercel.app/contests', contestData);
             if (res.data.insertedId) {
                 toast.success("Contest Added Successfully!");
                 reset();

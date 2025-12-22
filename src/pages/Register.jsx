@@ -37,7 +37,7 @@ const Register = () => {
         const user = res.user;
         updateUser({ displayName: name, photoURL: photo }).then(() => {
           setUser({ ...user, displayName: name, photoURL: photo });
-          axios.post('http://localhost:3000/users', { name, photo, email, role })
+          axios.post('https://contesthub-steel.vercel.app/users', { name, photo, email, role })
             .then(() => {
               navigate('/');
               toast.success('Registration successful');
@@ -65,7 +65,7 @@ const Register = () => {
         const email = user.email;
         const role = 'participant';  
 
-        axios.post('http://localhost:3000/users', { name, photo, email, role })
+        axios.post('https://contesthub-steel.vercel.app/users', { name, photo, email, role })
           .then(() => {
             navigate(`${location.state ? location.state : '/'}`);
             setUser(user);

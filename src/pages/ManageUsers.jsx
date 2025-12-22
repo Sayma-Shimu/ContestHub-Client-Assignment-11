@@ -13,7 +13,7 @@ const ManageUsers = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/users`);
+            const response = await axios.get(`https://contesthub-steel.vercel.app/users`);
             setAllUsers(response.data);
             setLoading(false);
         } catch (error) {
@@ -38,7 +38,7 @@ const ManageUsers = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res = await axios.patch(`http://localhost:3000/users/role/${user._id}`, { role: newRole });
+                    const res = await axios.patch(`https://contesthub-steel.vercel.app/users/role/${user._id}`, { role: newRole });
                     if (res.data.modifiedCount > 0) {
                         toast.success(`${user.name} is now a ${newRole}`);
                         fetchUsers();

@@ -19,7 +19,7 @@ const MyContestCreator = () => {
 
     const fetchMyContests = async () => {
         try {
-            const res = await axios.get(`http://localhost:3000/contests/creator/${user?.email}`);
+            const res = await axios.get(`https://contesthub-steel.vercel.app/contests/creator/${user?.email}`);
             setContests(res.data);
             setLoading(false);
         } catch (error) {
@@ -42,7 +42,7 @@ const MyContestCreator = () => {
         };
 
         try {
-            const res = await axios.patch(`http://localhost:3000/contests/${selectedContest._id}`, updatedContest);
+            const res = await axios.patch(`https://contesthub-steel.vercel.app/contests/${selectedContest._id}`, updatedContest);
             if (res.data.modifiedCount > 0) {
                 toast.success("Contest updated successfully");
                 fetchMyContests();
@@ -65,7 +65,7 @@ const MyContestCreator = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res = await axios.delete(`http://localhost:3000/contests/${id}`);
+                    const res = await axios.delete(`https://contesthub-steel.vercel.app/contests/${id}`);
                     if (res.data.deletedCount > 0) {
                         toast.success("Contest deleted successfully");
                         setContests(contests.filter(c => c._id !== id));
