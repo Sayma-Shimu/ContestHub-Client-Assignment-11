@@ -12,6 +12,7 @@ import Payment from "../pages/Payment";
 import Dashboard from "../layouts/Dashboard";
 import MyContestUser from "../pages/MyContestUser";
 import Winninngs from "../pages/Winninngs";
+import MyProfile from "../pages/MyProfile";
 
 
 
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
             {
                 path: 'my-winnings',
                 element: <Winninngs></Winninngs>
+            },
+            {
+                path: 'my-profile',
+                element: <MyProfile></MyProfile>
             }
         ]
     },
