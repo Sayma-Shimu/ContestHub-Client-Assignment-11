@@ -62,6 +62,14 @@ const Dashboard = () => {
                                     </button>
                                 </li>
                             </Link>
+                            <Link to="/dashboard/created-contests">
+                                <li>
+                                    <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Contest">
+
+                                        <span className="is-drawer-close:hidden">My Contest</span>
+                                    </button>
+                                </li>
+                            </Link>
                         </>}
 
                         {/* Participant Routes */}
