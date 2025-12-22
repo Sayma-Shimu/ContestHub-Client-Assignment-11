@@ -19,6 +19,7 @@ import ManageUsers from "../pages/ManageUsers";
 import ManageContests from "../pages/ManageContests";
 import Submissions from "../pages/Submissions";
 import PrivateRout from "../components/provider/PrivateRoute";
+import AboutUs from "../pages/AboutUs";
 
 
 
@@ -36,6 +37,11 @@ const router = createBrowserRouter([
             {
                 path: 'all-contests',
                 element: <AllContest></AllContest>
+            },
+
+            {
+                path: 'about-us',
+                element: <AboutUs></AboutUs>
             },
 
             {

@@ -12,7 +12,7 @@ const ContestCard = ({ contest }) => {
   } = contest;
 
   return (
-    <div className="border rounded-xl shadow-sm hover:shadow-lg transition overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden">
       <img
         src={image}
         alt={name}

@@ -79,7 +79,7 @@ const Navbar = () => {
         All Contests
       </NavLink>
       <NavLink
-        to="/extra"
+        to="/about-us"
         className={({ isActive }) =>
           `block px-5 py-3 rounded-full font-medium transition text-black ${
             isActive
@@ -90,7 +90,7 @@ const Navbar = () => {
           }`
         }
       >
-        Extra Section
+        About-Us
       </NavLink>
     </>
   );
