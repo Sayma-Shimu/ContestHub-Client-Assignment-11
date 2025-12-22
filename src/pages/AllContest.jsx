@@ -18,7 +18,7 @@ const AllContests = () => {
     axios
       .get(`https://contesthub-steel.vercel.app/approved-contests?type=${activeTab}&limit=${limit}&skip=${skip}`)
       .then((response) => {
-        // নতুন অবজেক্ট ফরম্যাট অনুযায়ী ডাটা সেট করা
+       
         setContests(response.data.contests);
         setTotalContests(response.data.totalCount);
       })
@@ -29,7 +29,7 @@ const AllContests = () => {
 
   const handleTabClick = (type) => {
     setActiveTab(type);
-    setSkip(0); // ট্যাব পাল্টালে প্রথম পেজে ফিরে যাবে
+    setSkip(0); 
   };
 
   const nextPage = () => {
