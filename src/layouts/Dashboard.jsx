@@ -56,6 +56,14 @@ const Dashboard = () => {
                                     </button>
                                 </li>
                             </Link>
+                            <Link to="/dashboard/manage-contests">
+                                <li>
+                                    <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manager Contests">
+
+                                        <span className="is-drawer-close:hidden">Manager Contests</span>
+                                    </button>
+                                </li>
+                            </Link>
                         </>}
 
                         {/* Creator Routes */}

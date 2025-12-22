@@ -50,6 +50,7 @@ const Payment = () => {
             userEmail: formData.get('userEmail'),
             creatorEmail: contest?.creatorEmail,
             price: contest.prizeMoney,
+            userPhoto: user?.photoURL,
             paymentStatus: "Paid",
         };
 

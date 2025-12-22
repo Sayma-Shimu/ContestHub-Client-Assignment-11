@@ -104,7 +104,7 @@ const MyContestCreator = () => {
                                     </div>
                                 </td>
                                 <td>
-                                    <Link to={`/submissions/${contest._id}`}>
+                                    <Link to={`/dashboard/submissions/${contest._id}`}>
                                         <button className="btn btn-sm btn-outline btn-primary">See Submissions</button>
                                     </Link>
                                 </td>
