@@ -1,3 +1,4 @@
+// components/Navbar.jsx
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "./provider/AuthProvider";
@@ -37,28 +38,20 @@ const Navbar = () => {
         setOpenProfile(false);
         setIsOpen(false);
       })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Logout failed!");
-      });
+      .catch(() => toast.error("Logout failed!"));
   };
 
   const primaryBtn = theme === "dark"
     ? "bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white"
     : "bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 text-white";
 
- 
   const menuItems = (
     <>
       <NavLink
         to="/"
         className={({ isActive }) =>
-          `block px-5 py-3 rounded-full font-medium transition text-black ${ 
-            isActive
-              ? "bg-gray-300" 
-              : theme === "dark" 
-                ? "hover:bg-gray-300" 
-                : "hover:bg-gray-200"
+          `block px-5 py-3 rounded-full font-medium transition text-black ${
+            isActive ? "bg-gray-300" : theme === "dark" ? "hover:bg-gray-300" : "hover:bg-gray-200"
           }`
         }
       >
@@ -68,11 +61,7 @@ const Navbar = () => {
         to="/all-contests"
         className={({ isActive }) =>
           `block px-5 py-3 rounded-full font-medium transition text-black ${
-            isActive
-              ? "bg-gray-300"
-              : theme === "dark" 
-                ? "hover:bg-gray-300" 
-                : "hover:bg-gray-200"
+            isActive ? "bg-gray-300" : theme === "dark" ? "hover:bg-gray-300" : "hover:bg-gray-200"
           }`
         }
       >
@@ -82,11 +71,7 @@ const Navbar = () => {
         to="/about-us"
         className={({ isActive }) =>
           `block px-5 py-3 rounded-full font-medium transition text-black ${
-            isActive
-              ? "bg-gray-300"
-              : theme === "dark" 
-                ? "hover:bg-gray-300" 
-                : "hover:bg-gray-200"
+            isActive ? "bg-gray-300" : theme === "dark" ? "hover:bg-gray-300" : "hover:bg-gray-200"
           }`
         }
       >
@@ -98,7 +83,8 @@ const Navbar = () => {
   return (
     <nav className={`sticky top-0 z-50 shadow-md ${theme === "dark" ? "bg-gray-100 text-gray-900" : "bg-white text-gray-900"}`}>
       <div className="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
-       {/* logo */}
+
+        {/* Logo */}
         <Link to="/" className="flex items-center gap-3 group">
           <div className={`p-2 ${theme === "dark" ? "bg-gray-300" : "bg-gray-100"} rounded-2xl ring-4 ring-gray-300 group-hover:ring-indigo-400 group-hover:scale-110 transition-all duration-300 shadow-lg`}>
             <img src={logo} alt="logo" className="w-12 h-12 rounded-xl object-cover" />
@@ -107,12 +93,11 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-6">
-          {menuItems}
-        </div>
+        <div className="hidden md:flex items-center gap-6">{menuItems}</div>
 
         {/* Right Side */}
         <div className="flex items-center gap-4">
+
           {/* Theme Toggle */}
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -132,9 +117,7 @@ const Navbar = () => {
               />
               {openProfile && (
                 <div className={`absolute right-0 mt-3 w-48 ${theme === "dark" ? "bg-gray-200 text-gray-900" : "bg-white"} rounded-xl shadow-2xl p-4 z-50 border ${theme === "dark" ? "border-gray-300" : "border-gray-200"}`}>
-                  <p className="font-bold text-center mb-3">
-                    {user.displayName || "User"}
-                  </p>
+                  <p className="font-bold text-center mb-3">{user.displayName || "User"}</p>
                   <hr className={`mb-3 ${theme === "dark" ? "border-gray-400" : "border-gray-300"}`} />
                   <Link
                     to="/dashboard"
@@ -153,9 +136,7 @@ const Navbar = () => {
               )}
             </div>
           ) : (
-            <Link to="/auth/login" className={`px-6 py-3 rounded-full ${primaryBtn} shadow-md`}>
-              Login
-            </Link>
+            <Link to="/auth/login" className={`px-6 py-3 rounded-full ${primaryBtn} shadow-md`}>Login</Link>
           )}
 
           {/* Mobile Menu Toggle */}

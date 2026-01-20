@@ -20,6 +20,7 @@ import ManageContests from "../pages/ManageContests";
 import Submissions from "../pages/Submissions";
 import PrivateRout from "../components/provider/PrivateRoute";
 import AboutUs from "../pages/AboutUs";
+import OverView from "../pages/overView/OverView";
 
 
 
@@ -109,6 +110,11 @@ const router = createBrowserRouter([
             {
                 path: 'my-profile',
                 element: <MyProfile></MyProfile>
+            },
+
+            {
+                path: 'over-view',
+                element: <OverView></OverView>
             }
         ]
     },

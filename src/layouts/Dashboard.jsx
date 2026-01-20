@@ -36,7 +36,7 @@ const Dashboard = () => {
                     {/* Sidebar content here */}
                     <ul className="menu w-full grow">
 
-                        <Link to="/dashboard">
+                        <Link to="/dashboard/over-view">
                             <li>
                                 <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Leaderboard">
 
