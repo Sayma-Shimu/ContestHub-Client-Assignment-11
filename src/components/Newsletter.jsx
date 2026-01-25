@@ -9,7 +9,7 @@ const Newsletter = () => {
     const email = e.target.email.value;
 
     if (email) {
-      // SweetAlert for CRUD/Action notification (Requirement)
+      // SweetAlert for CRUD/Action notification 
       Swal.fire({
         title: 'Success!',
         text: 'Thank you for subscribing! Check your inbox for the latest contests.',

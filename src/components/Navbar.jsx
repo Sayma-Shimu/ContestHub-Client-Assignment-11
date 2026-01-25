@@ -1,188 +1,203 @@
-// components/Navbar.jsx
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "./provider/AuthProvider";
 import logo from "../assets/contest_logo.png";
 import userImage from "../assets/user.jpg";
-import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
-import { FiSun, FiMoon } from "react-icons/fi";
+import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
+import {
+  FiSun, FiMoon, FiLogOut, FiLayout,
+  FiHome, FiAward, FiZap, FiInfo, FiMail
+} from "react-icons/fi";
 import { toast } from "react-toastify";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const { user, logOut, setUser } = useContext(AuthContext);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [isOpen, setIsOpen] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const profileRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
+    theme === "dark" ? document.documentElement.classList.add("dark") : document.documentElement.classList.remove("dark");
   }, [theme]);
 
+  // Handle Outside Click for Profile Dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (profileRef.current && !profileRef.current.contains(event.target)) {
-        setOpenProfile(false);
-      }
+      if (profileRef.current && !profileRef.current.contains(event.target)) setOpenProfile(false);
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleLogout = () => {
-    logOut()
-      .then(() => {
-        setUser(null);
-        toast.success("Logged out Successfully!");
-        setOpenProfile(false);
-        setIsOpen(false);
-      })
-      .catch(() => toast.error("Logout failed!"));
+    logOut().then(() => {
+      setUser(null);
+      toast.success("Logged out Successfully!");
+      setOpenProfile(false);
+      setIsOpen(false);
+    }).catch(() => toast.error("Logout failed!"));
   };
 
-  const primaryBtn = theme === "dark"
-    ? "bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white"
-    : "bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 text-white";
+  
+  const publicLinks = [
+    { name: "Home", path: "/", icon: <FiHome /> },
+    { name: "All Contests", path: "/all-contests", icon: <FiAward /> },
+    { name: "Success Stories", path: "/success-stories", icon: <FiZap /> },
+  ];
 
-  const menuItems = (
-    <>
-      <NavLink
-        to="/"
-        className={({ isActive }) =>
-          `block px-5 py-3 rounded-full font-medium transition text-black ${
-            isActive ? "bg-gray-300" : theme === "dark" ? "hover:bg-gray-300" : "hover:bg-gray-200"
-          }`
-        }
-      >
-        Home
-      </NavLink>
-      <NavLink
-        to="/all-contests"
-        className={({ isActive }) =>
-          `block px-5 py-3 rounded-full font-medium transition text-black ${
-            isActive ? "bg-gray-300" : theme === "dark" ? "hover:bg-gray-300" : "hover:bg-gray-200"
-          }`
-        }
-      >
-        All Contests
-      </NavLink>
-      <NavLink
-        to="/about-us"
-        className={({ isActive }) =>
-          `block px-5 py-3 rounded-full font-medium transition text-black ${
-            isActive ? "bg-gray-300" : theme === "dark" ? "hover:bg-gray-300" : "hover:bg-gray-200"
-          }`
-        }
-      >
-        About-Us
-      </NavLink>
-    </>
-  );
+  const privateLinks = [
+    { name: "About Us", path: "/about-us", icon: <FiInfo /> },
+    { name: "Contact", path: "/contact", icon: <FiMail /> },
+  ];
+
+  const activeLinks = user?.email ? [...publicLinks, ...privateLinks] : publicLinks;
 
   return (
-    <nav className={`sticky top-0 z-50 shadow-md ${theme === "dark" ? "bg-gray-100 text-gray-900" : "bg-white text-gray-900"}`}>
-      <div className="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+    <nav className={`sticky top-0 z-[100] transition-all duration-500 ${isScrolled
+      ? theme === "dark" ? "bg-gray-950/80 shadow-2xl border-b border-gray-800" : "bg-white/80 shadow-lg border-b border-gray-100"
+      : "bg-transparent"
+      } backdrop-blur-xl`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex justify-between items-center">
 
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className={`p-2 ${theme === "dark" ? "bg-gray-300" : "bg-gray-100"} rounded-2xl ring-4 ring-gray-300 group-hover:ring-indigo-400 group-hover:scale-110 transition-all duration-300 shadow-lg`}>
-            <img src={logo} alt="logo" className="w-12 h-12 rounded-xl object-cover" />
-          </div>
-          <span className="text-2xl font-bold drop-shadow-sm">ContestHub</span>
+        {/* Logo Section */}
+        <Link to="/" className="flex items-center gap-2 group">
+          <motion.div
+            whileHover={{ rotate: 360, scale: 1.1 }}
+            transition={{ duration: 0.6 }}
+            className={`p-1.5 rounded-xl ${theme === "dark" ? "bg-indigo-500/20" : "bg-indigo-600 shadow-indigo-500/30 shadow-lg"}`}
+          >
+            <img src={logo} alt="logo" className="w-9 h-9 object-contain" />
+          </motion.div>
+          <span className={`text-2xl font-black tracking-tighter ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+            Contest<span className="text-indigo-600 italic">Hub</span>
+          </span>
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-6">{menuItems}</div>
+        <div className="hidden lg:flex items-center gap-1">
+          {activeLinks.map((link) => (
+            <NavLink
+              key={link.name}
+              to={link.path}
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition-all duration-300 text-sm ${isActive
+                  ? "bg-indigo-600 text-white shadow-lg"
+                  : theme === "dark" ? "text-gray-300 hover:bg-gray-800" : "text-gray-600 hover:bg-indigo-50 hover:text-indigo-600"
+                }`
+              }
+            >
+              <span className="text-lg">{link.icon}</span>
+              {link.name}
+            </NavLink>
+          ))}
+        </div>
 
-        {/* Right Side */}
-        <div className="flex items-center gap-4">
-
+        {/* Right Side Actions */}
+        <div className="flex items-center gap-3">
           {/* Theme Toggle */}
-          <button
+          <motion.button
+            whileTap={{ scale: 0.8 }}
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className={`p-3 rounded-full ${primaryBtn} shadow-md transition-all`}
+            className={`p-2.5 rounded-xl transition-all ${theme === "dark" ? "bg-gray-800 text-yellow-400" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
           >
             {theme === "dark" ? <FiSun size={20} /> : <FiMoon size={20} />}
-          </button>
+          </motion.button>
 
-          {/* User Profile / Login */}
           {user?.email ? (
             <div ref={profileRef} className="relative">
-              <img
+              <motion.img
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
                 src={user.photoURL || userImage}
                 alt="profile"
                 onClick={() => setOpenProfile(!openProfile)}
-                className={`w-10 h-10 rounded-full ring-4 ${theme === "dark" ? "ring-gray-400" : "ring-gray-300"} cursor-pointer hover:ring-indigo-500 transition-all shadow-lg`}
+                className="w-10 h-10 rounded-xl border-2 border-indigo-600 p-0.5 cursor-pointer object-cover shadow-lg"
               />
-              {openProfile && (
-                <div className={`absolute right-0 mt-3 w-48 ${theme === "dark" ? "bg-gray-200 text-gray-900" : "bg-white"} rounded-xl shadow-2xl p-4 z-50 border ${theme === "dark" ? "border-gray-300" : "border-gray-200"}`}>
-                  <p className="font-bold text-center mb-3">{user.displayName || "User"}</p>
-                  <hr className={`mb-3 ${theme === "dark" ? "border-gray-400" : "border-gray-300"}`} />
-                  <Link
-                    to="/dashboard"
-                    onClick={() => setOpenProfile(false)}
-                    className={`block px-4 py-2 rounded-lg ${theme === "dark" ? "hover:bg-gray-300" : "hover:bg-gray-100"} font-medium transition`}
+
+              <AnimatePresence>
+                {openProfile && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 15, scale: 0.95 }}
+                    className={`absolute right-0 mt-4 w-64 rounded-[2rem] shadow-2xl border ${theme === "dark" ? "bg-gray-900 border-gray-800 text-white" : "bg-white border-gray-100"
+                      } p-4 z-[110]`}
                   >
-                    Dashboard
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className={`w-full text-left px-4 py-2 rounded-lg hover:bg-red-100 text-red-600 font-medium mt-2 transition`}
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
+                    <div className="flex flex-col items-center pb-4 border-b border-gray-100 dark:border-gray-800">
+                      <img src={user.photoURL || userImage} className="w-16 h-16 rounded-full mb-2 border-2 border-indigo-500 p-1" alt="" />
+                      <p className="font-black text-center truncate w-full">{user.displayName || "User"}</p>
+                      <p className="text-[10px] text-indigo-500 font-bold uppercase tracking-widest">Active Member</p>
+                    </div>
+
+                    <div className="py-2 space-y-1">
+                      <Link to="/dashboard" onClick={() => setOpenProfile(false)} className="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-indigo-50 dark:hover:bg-gray-800 transition-all font-bold group">
+                        <FiLayout className="group-hover:text-indigo-600" /> Dashboard
+                      </Link>
+                      <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 transition-all font-bold">
+                        <FiLogOut /> Logout
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ) : (
-            <Link to="/auth/login" className={`px-6 py-3 rounded-full ${primaryBtn} shadow-md`}>Login</Link>
+            <Link to="/auth/login" className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl shadow-lg shadow-indigo-500/25 hidden sm:block">
+              Login
+            </Link>
           )}
 
-          {/* Mobile Menu Toggle */}
-          <button onClick={() => setIsOpen(!isOpen)} className="text-black md:hidden">
-            {isOpen ? <HiOutlineX size={30} /> : <HiOutlineMenu size={30} />}
+          {/* Mobile Menu Button */}
+          <button onClick={() => setIsOpen(!isOpen)} className={`lg:hidden p-2 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+            {isOpen ? <HiOutlineX size={30} /> : <HiOutlineMenuAlt3 size={30} />}
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {isOpen && (
-        <div className={`md:hidden ${theme === "dark" ? "bg-gray-100" : "bg-white"} px-6 py-6 space-y-4 border-t ${theme === "dark" ? "border-gray-300" : "border-gray-200"}`}>
-          {menuItems}
-          {user?.email ? (
-            <>
-              <NavLink
-                to="/dashboard"
-                onClick={() => setIsOpen(false)}
-                className="block px-5 py-3 rounded-full bg-gray-300 hover:bg-gray-400 transition font-medium text-black"
-              >
-                Dashboard
-              </NavLink>
-              <button
-                onClick={handleLogout}
-                className={`w-full px-5 py-3 rounded-full ${primaryBtn} shadow-md`}
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <Link
-              to="/auth/login"
-              onClick={() => setIsOpen(false)}
-              className={`w-full block px-5 py-3 rounded-full ${primaryBtn} shadow-md text-center`}
-            >
-              Login
-            </Link>
-          )}
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className={`w-full px-5 py-3 rounded-full ${primaryBtn} shadow-md flex items-center justify-center gap-2`}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className={`lg:hidden overflow-hidden ${theme === "dark" ? "bg-gray-950 border-gray-800" : "bg-white border-gray-100"} border-t shadow-2xl`}
           >
-            {theme === "dark" ? "☀️ Light Mode" : "🌙 Dark Mode"}
-          </button>
-        </div>
-      )}
+            <div className="px-6 py-8 space-y-4">
+              {activeLinks.map((link) => (
+                <NavLink
+                  key={link.name}
+                  to={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-4 text-xl font-black ${isActive ? "text-indigo-600" : theme === "dark" ? "text-gray-300" : "text-gray-600"}`
+                  }
+                >
+                  <span className="bg-indigo-100 dark:bg-gray-800 p-2 rounded-lg">{link.icon}</span>
+                  {link.name}
+                </NavLink>
+              ))}
+              {!user?.email && (
+                <Link to="/auth/login" onClick={() => setIsOpen(false)} className="block w-full py-4 bg-indigo-600 text-white text-center font-black rounded-2xl shadow-xl shadow-indigo-500/20">
+                  Login to Access More
+                </Link>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

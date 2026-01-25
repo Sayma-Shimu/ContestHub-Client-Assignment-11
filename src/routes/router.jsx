@@ -21,6 +21,8 @@ import Submissions from "../pages/Submissions";
 import PrivateRout from "../components/provider/PrivateRoute";
 import AboutUs from "../pages/AboutUs";
 import OverView from "../pages/overView/OverView";
+import SuccessStories from "../pages/SuccessStories";
+import Contact from "../pages/Contact";
 
 
 
@@ -41,8 +43,17 @@ const router = createBrowserRouter([
             },
 
             {
+                path: 'success-stories',
+                element: <SuccessStories></SuccessStories>
+            },
+
+            {
                 path: 'about-us',
                 element: <AboutUs></AboutUs>
+            },
+            {
+                path: '/contact',
+                element: <Contact></Contact>
             },
 
             {
